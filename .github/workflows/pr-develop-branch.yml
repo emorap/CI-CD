@@ -1,0 +1,35 @@
+name: Validate PR on develop branch
+# Definition when the workflow should run
+on:
+    # The workflow will run whenever an event happens on a pull request
+    pull_request:
+      # The events are that a PR is opened, or when a commit is pushed
+      # to a branch that has an existing pull request
+      types: [opened, synchronize]
+      # The branches filter allows to specify that this workflow should only
+      # run if the branch name is "develop". This way we prevent this workflow
+      # from running when PRs are opened on other branches
+      branches: [ develop ]
+      # We only care about changes to the force-app directory, which is the
+      # root directory of the sfdx project. This prevents the job from running
+      # when changing non-salesforce files (like this yml file).
+      paths:
+        - 'force-app/**'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the Source code from the latest commit
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          
+      - name: Install NPM
+        run: |
+          npm install
+      # Install the SFDX CLI using the npm command
+      - name: Install the SFDX CLI
+        run: |
+          npm install @salesforce/cli --global
+          sf --help
+          
