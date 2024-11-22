@@ -3,4 +3,5 @@ public with sharing class Claseinicial {
         Integer accountCount = [SELECT COUNT() FROM Account];
        System.debug('There are ' + accountCount + 'ccounts in the system.');
     }
+    
 }
