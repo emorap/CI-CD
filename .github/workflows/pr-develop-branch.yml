@@ -32,5 +32,5 @@ jobs:
       - name: Install the SFDX CLI
         run: |
           npm install @salesforce/cli --global
-          sf --help
+          sf --help 
           
