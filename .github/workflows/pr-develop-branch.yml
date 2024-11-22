@@ -16,12 +16,10 @@ on:
       paths:
         - 'force-app/**'
 jobs:
-  build:
-    runs-on: ubuntu-latest
   validate:
     runs-on: ubuntu-latest
     env:
-      ENVIRONMENT: UAT
+      ENVIRONMENT: devops
       CLIENT_ID: ${{ vars.CLIENT_ID }}
       INSTANCE_URL:  ${{ vars.INSTANCE_URL }}
       SF_USERNAME:  ${{ vars.SF_USERNAME }}
