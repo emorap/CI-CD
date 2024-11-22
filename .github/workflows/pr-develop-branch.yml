@@ -22,14 +22,15 @@ jobs:
       # Checkout the Source code from the latest commit
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0
+           fetch-depth: 0
+           
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22.11.0'
           
-      - name: Install NPM
-        run: |
-          npm install
-      # Install the SFDX CLI using the npm command
       - name: Install the SFDX CLI
         run: |
           npm install @salesforce/cli --global
-          sf --help
+          sf --help 
           
