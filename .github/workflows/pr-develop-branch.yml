@@ -33,8 +33,3 @@ jobs:
         run: |
           npm install @salesforce/cli --global
           sf --help 
-<<<<<<< HEAD
-          
-=======
-          
->>>>>>> afa0da4 (Ajuste total)
