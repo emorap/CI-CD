@@ -31,7 +31,7 @@ jobs:
           
       - name: Install NPM
         run: |
-          npm install
+          npm install eslint@^8.0.0
       # Install the SFDX CLI using the npm command
       - name: Install the SFDX CLI
         run: |
