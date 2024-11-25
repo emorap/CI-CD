@@ -54,7 +54,7 @@ jobs:
           echo "INSTANCE_URL: ${{ env.INSTANCE_URL }}"
           echo "SF_USERNAME: ${{ env.SF_USERNAME }}"
           echo "SF_USERNAME: ${{ vars.URL }}
-          sfdx auth:jwt:grant --clientid ${{ env.CLIENT_ID }} -f Certifications/server.key -u ${{ env.SF_USERNAME }} -a jwt-login --instanceurl ${{ env.INSTANCE_URL }}
+          sfdx auth:jwt:grant --clientid ${{ env.CLIENT_ID }} -f Certifications/server.key -u ${{ env.SF_USERNAME }} -a jwt-login --instanceurl ${{ env.Sitio }}
       
       - name: Validate deployment
         run: |
