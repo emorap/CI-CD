@@ -13,11 +13,9 @@ jobs:
     env:
       ENVIRONMENT: devops
       Secret: ${{ secrets.SERVERKEY}}
-      CLIENT_ID: ${{ vars.CLIENT_ID }}
+      CLIENT_ID: ${{ secrets.CLIENT_ID }}
       INSTANCE_URL:  ${{ vars.URL }}
       SF_USERNAME:  ${{ vars.SF_USERNAME }}
-      key_file_name: ${{ vars.SF_CICD_SERVERKEY }}
-      client-id: ${{ vars.CLIENT_ID }}
       TESTS_TO_RUN: ALL
     
     steps:
