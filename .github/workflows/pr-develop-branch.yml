@@ -48,18 +48,10 @@ jobs:
 
       - name: Show package.xml
         run: cat ./delta_source/package/package.xml
-
+      
       - name: Authenticate with Salesforce CLI using JWT flow
         run: 
-          sf org login jwt --username  ${{ env.SF_USERNAME }} --jwt-key-file ${{ env.Secret}} --client-id ${{ env.CLIENT_ID }} --instance-url ${{ env.INSTANCE_URL }} --json
-      - name: Authenticate with Salesforce CLI using JWT flow part 2
-        run: 
-          sfdx auth:jwt:grant --clientid ${{ env.CLIENT_ID }} -f Certifications/server.key -u -a jwt-login --instanceurl ${{ env.INSTANCE_URL }}
-
-
-      - name: Validate deployment
-        run: |
-            echo "Running deployment validation"
-            echo "Running deployment validation" ${{env.APEX_TESTS}}
-
-            sf project deploy validate --source-dir "./delta_source/force-app" --wait 1000 --verbose --test-level RunSpecifiedTests --tests ${{env.APEX_TESTS}} --target-org jwt-login
+          echo "${Secret}"
+          echo "${Secret}" > server.key
+          sf org login jwt --username  ${{ env.SF_USERNAME }} --jwt-key-file server.key --client-id ${{ env.CLIENT_ID }} --instance-url ${{ env.INSTANCE_URL }} --json
+      

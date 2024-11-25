@@ -26,4 +26,16 @@ https://github.com/salto-io/salesforce-ci-cd-org-dev/blob/master/.github/workflo
 
 sfdx force:auth:jwt:grant --clientid 3MVG9AR068fT4uszYXeLVVMxnyfzZe.8EheVp1RuN3rbtENZXCmcF_x8xeikX640ak.UivTCzD_f0ddCtZNZA --jwtkeyfile /Users/edgar.mora/Downloads/server.key --username edgar.mora@clarosfi.com.co.devops --instanceurl https://clarosfi--devops.sandbox.my.salesforce.com –setdefaultdevhubusername --json
 
-sf org login jwt --username  edgar.mora@clarosfi.com.co.devops --jwt-key-file /Users/edgar.mora/Downloads/server.key --client-id 3MVG9AR068fT4uszYXeLVVMxnyfzZe.8EheVp1RuN3rbtENZXCmcF_x8xeikX640ak.UivTCzD_f0ddCtZNZA --instance-url https://clarosfi--devops.sandbox.my.salesforce.com --json
+sf org login jwt --username  edgar.mora@clarosfi.com.co.devops --jwt-key-file /Users/edgar.mora/Downloads/server.key --client-id 3MVG9AR068fT4uszYXeLVVMxnyfzZe._x8xeikX640ak.UivTCzD_f0ddCtZNZA --instance-url https://clarosfi--devops.sandbox.my.salesforce.com --json
+
+- name: Authenticate with Salesforce CLI using JWT flow part 2
+        run: 
+          sfdx auth:jwt:grant --clientid ${{ env.CLIENT_ID }} -f Certifications/server.key -u -a jwt-login --instanceurl ${{ env.INSTANCE_URL }}
+
+
+      - name: Validate deployment
+        run: |
+            echo "Running deployment validation"
+            echo "Running deployment validation" ${{env.APEX_TESTS}}
+
+            sf project deploy validate --source-dir "./delta_source/force-app" --wait 1000 --verbose --test-level RunSpecifiedTests --tests ${{env.APEX_TESTS}} --target-org jwt-login
