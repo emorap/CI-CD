@@ -11,23 +11,23 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     env:
-      ENVIRONMENT: devopsv
+      ENVIRONMENT: devops
       CLIENT_ID: ${{ vars.CLIENT_ID }}
       INSTANCE_URL:  ${{ vars.URL }}
       SF_USERNAME:  ${{ vars.SF_USERNAME }}
-      Sitio: ${{ vars.URL }}
       key_file_name: ${{ vars.SF_CICD_SERVERKEY }}
       client-id: ${{ vars.CLIENT_ID }}
       TESTS_TO_RUN: ALL
     
     steps:
       # Checkout the Source code from the latest commit
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
            fetch-depth: 0
            
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '22.11.0'
           
@@ -50,10 +50,10 @@ jobs:
 
       - name: Authenticate with Salesforce CLI using JWT flow
         run: 
-          sf org login jwt --username  ${{ env.SF_USERNAME }} --jwt-key-file ${{ env.key_file_name }} --client-id ${{ env.CLIENT_ID }} --instance-url ${{ env.INSTANCE_URL }} --json
+          sf org login jwt --username  ${{ env.SF_USERNAME }} --jwt-key-file -f Certifications/server.key --client-id ${{ env.CLIENT_ID }} --instance-url ${{ env.INSTANCE_URL }} --json
       - name: Authenticate with Salesforce CLI using JWT flow part 2
         run: 
-          sfdx auth:jwt:grant --clientid ${{ env.CLIENT_ID }} -f Certifications/server.key -u ${{ env.SF_USERNAME }} -a jwt-login --instanceurl ${{ env.INSTANCE_URL }}
+          sfdx auth:jwt:grant --clientid ${{ env.CLIENT_ID }} -f Certifications/server.key -u -a jwt-login --instanceurl ${{ env.INSTANCE_URL }}
 
 
       - name: Validate deployment
