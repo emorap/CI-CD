@@ -16,8 +16,15 @@ on:
       paths:
         - 'force-app/**'
 jobs:
-  build:
+  validate:
     runs-on: ubuntu-latest
+    env:
+      ENVIRONMENT: devops
+      CLIENT_ID: ${{ vars.CLIENT_ID }}
+      INSTANCE_URL:  ${{ vars.INSTANCE_URL }}
+      SF_USERNAME:  ${{ vars.SF_USERNAME }}
+      TESTS_TO_RUN: ALL
+    
     steps:
       # Checkout the Source code from the latest commit
       - uses: actions/checkout@v3
@@ -45,4 +52,11 @@ jobs:
 
       - name: Show package.xml
         run: cat ./delta_source/package/package.xml
+
+      - name: Authenticate
+        run: |
+          echo "Authenticate with Salesforce CLI using JWT flow"
+          echo "CLIENT_ID: ${{ env.CLIENT_ID }}"
+          echo "INSTANCE_URL: ${{ env.INSTANCE_URL }}"
+          echo "SF_USERNAME: ${{ env.SF_USERNAME }}"
 
