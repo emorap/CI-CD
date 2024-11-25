@@ -50,7 +50,7 @@ jobs:
 
       - name: Authenticate with Salesforce CLI using JWT flow
         run: 
-          sf org login jwt --username  ${{ env.SF_USERNAME }} --keyfile ${{ env.key_file_name }} --client-id ${{ env.CLIENT_ID }} --instance-url ${{ env.INSTANCE_URL }}
+          sf org login jwt --username  ${{ env.SF_USERNAME }} --jwt-key-file ${{ env.key_file_name }} --client-id ${{ env.CLIENT_ID }} --instance-url ${{ env.INSTANCE_URL }} --json
       - name: Authenticate with Salesforce CLI using JWT flow part 2
         run: 
           sfdx auth:jwt:grant --clientid ${{ env.CLIENT_ID }} -f Certifications/server.key -u ${{ env.SF_USERNAME }} -a jwt-login --instanceurl ${{ env.INSTANCE_URL }}
