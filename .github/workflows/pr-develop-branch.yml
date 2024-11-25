@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ENVIRONMENT: devops
+      Secret: ${{ secrets.SERVERKEY}}
       CLIENT_ID: ${{ vars.CLIENT_ID }}
       INSTANCE_URL:  ${{ vars.URL }}
       SF_USERNAME:  ${{ vars.SF_USERNAME }}
@@ -50,7 +51,7 @@ jobs:
 
       - name: Authenticate with Salesforce CLI using JWT flow
         run: 
-          sf org login jwt --username  ${{ env.SF_USERNAME }} --jwt-key-file -f Certifications/server.key --client-id ${{ env.CLIENT_ID }} --instance-url ${{ env.INSTANCE_URL }} --json
+          sf org login jwt --username  ${{ env.SF_USERNAME }} --jwt-key-file ${{ env.Secret}} --client-id ${{ env.CLIENT_ID }} --instance-url ${{ env.INSTANCE_URL }} --json
       - name: Authenticate with Salesforce CLI using JWT flow part 2
         run: 
           sfdx auth:jwt:grant --clientid ${{ env.CLIENT_ID }} -f Certifications/server.key -u -a jwt-login --instanceurl ${{ env.INSTANCE_URL }}

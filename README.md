@@ -21,3 +21,9 @@ The `sfdx-project.json` file contains useful configuration information for your 
 https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_auth_key_and_cert.htm
 https://medium.com/@danielbelini/how-to-install-salesforce-cli-on-github-actions-91287138abba
 https://www.apexhours.com/ci-cd-pipeline-using-gitlab-for-salesforce/
+https://github.com/salto-io/salesforce-ci-cd-org-dev/blob/master/.github/workflows/pr-develop-branch.yml
+
+
+sfdx force:auth:jwt:grant --clientid 3MVG9AR068fT4uszYXeLVVMxnyfzZe.8EheVp1RuN3rbtENZXCmcF_x8xeikX640ak.UivTCzD_f0ddCtZNZA --jwtkeyfile /Users/edgar.mora/Downloads/server.key --username edgar.mora@clarosfi.com.co.devops --instanceurl https://clarosfi--devops.sandbox.my.salesforce.com –setdefaultdevhubusername --json
+
+sf org login jwt --username  edgar.mora@clarosfi.com.co.devops --jwt-key-file /Users/edgar.mora/Downloads/server.key --client-id 3MVG9AR068fT4uszYXeLVVMxnyfzZe.8EheVp1RuN3rbtENZXCmcF_x8xeikX640ak.UivTCzD_f0ddCtZNZA --instance-url https://clarosfi--devops.sandbox.my.salesforce.com --json
