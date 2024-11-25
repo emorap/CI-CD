@@ -16,6 +16,7 @@ jobs:
       INSTANCE_URL:  ${{ vars.INSTANCE_URL }}
       SF_USERNAME:  ${{ vars.SF_USERNAME }}
       Sitio: ${{ vars.URL }}
+      Secret: ${{ secrets.EDGAR }}
       TESTS_TO_RUN: ALL
     
     steps:
