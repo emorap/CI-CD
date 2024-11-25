@@ -3,7 +3,7 @@ name: Validate PR on develop branch
 on:
     # The workflow will run whenever an event happens on a pull request
     pull_request:
-      types: [opened, synchronize]
+      types: [closed]
       branches: [ develop ]
       paths:
         - 'force-app/**'
