@@ -39,3 +39,5 @@ sf org login jwt --username  edgar.mora@clarosfi.com.co.devops --jwt-key-file /U
             echo "Running deployment validation" ${{env.APEX_TESTS}}
 
             sf project deploy validate --source-dir "./delta_source/force-app" --wait 1000 --verbose --test-level RunSpecifiedTests --tests ${{env.APEX_TESTS}} --target-org jwt-login
+
+            sf project deploy start --manifest packageChanges.xml --target-org  $(username-qa) --test-level RunLocalTests --dry-run --ignore-conflicts
