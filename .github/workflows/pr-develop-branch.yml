@@ -13,10 +13,11 @@ jobs:
     env:
       ENVIRONMENT: devopsv
       CLIENT_ID: ${{ vars.CLIENT_ID }}
-      INSTANCE_URL:  ${{ vars.INSTANCE_URL }}
+      INSTANCE_URL:  ${{ vars.URL }}
       SF_USERNAME:  ${{ vars.SF_USERNAME }}
       Sitio: ${{ vars.URL }}
-      Secret: ${{ secrets.EDGAR }}
+      key_file_name: ${{ vars.SF_CICD_SERVERKEY }}
+      client-id: ${{ vars.CLIENT_ID }}
       TESTS_TO_RUN: ALL
     
     steps:
@@ -53,9 +54,10 @@ jobs:
           echo "CLIENT_ID: ${{ env.CLIENT_ID }}"
           echo "INSTANCE_URL: ${{ env.INSTANCE_URL }}"
           echo "SF_USERNAME: ${{ env.SF_USERNAME }}"
-          echo "SF_USERNAME: ${{ vars.URL }}
-          sfdx auth:jwt:grant --clientid ${{ env.CLIENT_ID }} -f Certifications/server.key -u ${{ env.SF_USERNAME }} -a jwt-login --instanceurl ${{ env.Sitio }}
-      
+          echo "key_file: ${{ env.key_file_name }}
+          sf org login jwt --username  ${{ env.SF_USERNAME }} --keyfile ${{ env.key_file_name }} --client-id ${{ env.CLIENT_ID }} --instance-url ${{ env.INSTANCE_URL }}
+          sfdx auth:jwt:grant --clientid ${{ env.CLIENT_ID }} -f Certifications/server.key -u ${{ env.SF_USERNAME }} -a jwt-login --instanceurl ${{ env.INSTANCE_URL }}
+
       - name: Validate deployment
         run: |
             echo "Running deployment validation"
