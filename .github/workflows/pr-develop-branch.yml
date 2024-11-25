@@ -3,16 +3,8 @@ name: Validate PR on develop branch
 on:
     # The workflow will run whenever an event happens on a pull request
     pull_request:
-      # The events are that a PR is opened, or when a commit is pushed
-      # to a branch that has an existing pull request
       types: [opened, synchronize]
-      # The branches filter allows to specify that this workflow should only
-      # run if the branch name is "develop". This way we prevent this workflow
-      # from running when PRs are opened on other branches
       branches: [ develop ]
-      # We only care about changes to the force-app directory, which is the
-      # root directory of the sfdx project. This prevents the job from running
-      # when changing non-salesforce files (like this yml file).
       paths:
         - 'force-app/**'
 jobs:
@@ -23,6 +15,7 @@ jobs:
       CLIENT_ID: ${{ vars.CLIENT_ID }}
       INSTANCE_URL:  ${{ vars.INSTANCE_URL }}
       SF_USERNAME:  ${{ vars.SF_USERNAME }}
+      Sitio: ${{ vars.URL }}
       TESTS_TO_RUN: ALL
     
     steps:
@@ -59,4 +52,5 @@ jobs:
           echo "CLIENT_ID: ${{ env.CLIENT_ID }}"
           echo "INSTANCE_URL: ${{ env.INSTANCE_URL }}"
           echo "SF_USERNAME: ${{ env.SF_USERNAME }}"
+          echo "SF_USERNAME: ${{ vars.URL }}
 
