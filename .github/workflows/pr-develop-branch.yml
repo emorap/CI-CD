@@ -11,11 +11,12 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     env:
-      ENVIRONMENT: devops
+      ENVIRONMENT: devopsv
       CLIENT_ID: ${{ vars.CLIENT_ID }}
       INSTANCE_URL:  ${{ vars.INSTANCE_URL }}
       SF_USERNAME:  ${{ vars.SF_USERNAME }}
       Sitio: ${{ vars.URL }}
+      Secret: ${{ secrets.EDGAR }}
       TESTS_TO_RUN: ALL
     
     steps:
