@@ -55,6 +55,7 @@ jobs:
 
       - name: Set environment variable for server key file
         run: echo "SERVER_KEY_PATH=$(pwd)/key/server.key" >> $GITHUB_ENV
+             cat ./key/server.key  # Imprime el contenido del archivo
       
       - name: Authenticate with Salesforce CLI using JWT flow
         run:            
