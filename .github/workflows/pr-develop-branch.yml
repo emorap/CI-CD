@@ -51,12 +51,9 @@ jobs:
         run: 
           echo "${Secret}"
           echo "${Secret}" > server.key
-          sf org login jwt --username  ${{ env.SF_USERNAME }} --jwt-key-file server.key --client-id ${{ env.CLIENT_ID }} --instance-url ${{ env.INSTANCE_URL }} -a devops -s --json
+          sf org login jwt --username  ${{ env.SF_USERNAME }} --jwt-key-file server.key --client-id ${{ env.CLIENT_ID }} --instance-url ${{ env.INSTANCE_URL }} --alias devops --set-default --json
       
-      - name: Validar Org
-        run: 
-          sf org display --json
-
+   
       - name: validar Despliegue en Org
         run: 
-          sf project deploy start --manifest ./delta_source/package/package.xml  --test-level RunLocalTests --dry-run --ignore-conflicts
+          sf project deploy start --manifest ./delta_source/package/package.xml  --test-level RunLocalTests --dry-run --ignore-conflicts --verbose --target-org 
