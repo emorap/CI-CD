@@ -11,7 +11,6 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     env:
-      ENVIRONMENT: devops
       Secret: ${{ secrets.SERVERKEY}}
       CLIENT_ID: ${{ secrets.CLIENT_ID }}
       INSTANCE_URL:  ${{ vars.URL }}
@@ -53,14 +52,14 @@ jobs:
           echo "${Secret}" > server.key
           sf org login jwt --username  ${{ env.SF_USERNAME }} --jwt-key-file server.key --client-id ${{ env.CLIENT_ID }} --alias develop --set-default --instance-url ${{ env.INSTANCE_URL }}  --json --help
      
-      - name: PreDeploy
+      - name: PreDeploy sf
         run: 
-          sf project deploy start --manifest /delta_source/package/package.xml  --target-org ${{ env.SF_USERNAME }} --test-level RunLocalTests --dry-run --ignore-conflicts --verbose --help
+          sf project deploy start --manifest "./delta_source/package/package.xml"  --target-org ${{ env.SF_USERNAME }} --test-level RunLocalTests --dry-run --ignore-conflicts --verbose --help
 
       - name: Install the SFDX CLI Scanner
         run: |
           echo 'y' | sf plugins install @salesforce/sfdx-scanner
 
-      - name: Run SFDX CLI Scanner
+      - name: Run SFDX CLI Scanner 
         run: |
-          sf scanner run -f html -t "force-app" -e "eslint,retire-js,pmd,cpd" -c "Design,Best Practices,Code Style,Performance,Security" --outfile reports/scan-reports.html 
+          sf scanner run -f html -t "./force-app" -e "eslint,retire-js,pmd,cpd" -c "Design,Best Practices,Code Style,Performance,Security" --outfile reports/scan-reports.html 
