@@ -48,7 +48,7 @@ jobs:
         run: cat ./delta_source/package/package.xml
 
       - name: create folder
-        run: mkdir ./key
+        run: mkdir ./key/server.key
              echo "${Secret}" > ./key/server.key
       
       - name: Authenticate with Salesforce CLI using JWT flow
