@@ -15,6 +15,7 @@ jobs:
       CLIENT_ID: ${{ secrets.CLIENT_ID }}
       INSTANCE_URL:  ${{ vars.URL }}
       SF_USERNAME:  ${{ vars.SF_USERNAME }}
+      serverkey: 
       TESTS_TO_RUN: ALL
     
     steps:
@@ -46,11 +47,14 @@ jobs:
       - name: Show package.xml
         run: cat ./delta_source/package/package.xml
       
+      - name: Create server key file
+        run: |
+         echo "${Secret}"
+         echo "${Secret}" > server.key
+
       - name: Authenticate with Salesforce CLI using JWT flow
         run: 
-          echo "${Secret}"
-          echo "${Secret}" > server.key
-          sf org login jwt --username  ${{ env.SF_USERNAME }} --jwt-key-file server.key --client-id ${{ env.CLIENT_ID }} --alias develop --set-default --instance-url ${{ env.INSTANCE_URL }}  --json --help
+          sf org login jwt --username  ${{ env.SF_USERNAME }} --jwt-key-file server.key --client-id ${{ env.CLIENT_ID }} --alias develop --set-default --instance-url ${{ env.INSTANCE_URL }}  --json 
      
       - name: PreDeploy sf
         run: 
