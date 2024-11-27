@@ -56,8 +56,8 @@ jobs:
       
       - name: Authenticate with Salesforce CLI using JWT flow
         run:
-          echo "${Secret}" > server.key            
-          sf org login jwt --username  ${{ env.SF_USERNAME }} --jwt-key-file ${{ secrets.SERVERKEY}}  --client-id ${{ env.CLIENT_ID }} --instance-url ${{ env.INSTANCE_URL }}  --alias develop --set-default  --json 
+          echo "${Secret}" > ./key/server.key           
+          sf org login jwt --username  ${{ env.SF_USERNAME }} --jwt-key-file /home/runner/work/CI-CD/CI-CD/key/server.key  --client-id ${{ env.CLIENT_ID }} --instance-url ${{ env.INSTANCE_URL }}  --alias develop --set-default  --json 
         
       - name: Verify Authentication
         run: |
