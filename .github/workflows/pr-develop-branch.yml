@@ -47,6 +47,9 @@ jobs:
       - name: create folder
         run: 
           mkdir -p ./key
+
+      - name: create folder
+        run: 
           echo "${{ secrets.SERVERKEY}}" > ./key/server.key
           cat ./key/server.key  # Imprime el contenido del archivo
       
