@@ -15,7 +15,6 @@ jobs:
       CLIENT_ID: ${{ secrets.CLIENT_ID }}
       INSTANCE_URL:  ${{ vars.URL }}
       SF_USERNAME:  ${{ vars.SF_USERNAME }}
-      serverkey: 
       TESTS_TO_RUN: ALL
     
     steps:
