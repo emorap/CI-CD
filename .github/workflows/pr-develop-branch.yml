@@ -67,11 +67,14 @@ jobs:
       
       - name: PreDeploy sf
         run: 
-          sf project deploy start --manifest "./delta_source/package/package.xml"  --target-org develop --test-level NoTestRun --dry-run --ignore-conflicts 
+          sf project deploy start --manifest "./delta_source/package/package.xml"  --target-org develop --test-level RunLocalTests --dry-run --ignore-conflicts 
 
       - name: Install the SFDX CLI Scanner
         run: |
           echo 'y' | sf plugins install @salesforce/sfdx-scanner
+      
+      - name: Create reports directory
+        run: mkdir -p reports
 
       - name: Run SFDX CLI Scanner 
         run: |
