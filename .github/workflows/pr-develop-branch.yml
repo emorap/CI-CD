@@ -45,12 +45,18 @@ jobs:
         run: cat ./delta_source/package/package.xml
 
       - name: create folder
-        run: mkdir -p ./key
+        run: 
+          mkdir -p ./key
+          echo "${{ secrets.SERVERKEY}}" > ./key/server.key
+          cat ./key/server.key  # Imprime el contenido del archivo
       
+      - name: Set environment variable for server key file
+        run: echo "SERVER_KEY_PATH=$(pwd)/key/server.key" >> $GITHUB_ENV
+
       - name: Authenticate with Salesforce CLI using JWT flow
         run:
-          echo "$Secreto" > ./key/server.key           
-          sf org login jwt --username  ${{ env.SF_USERNAME }} --jwt-key-file /home/runner/work/CI-CD/CI-CD/key/server.key  --client-id ${{ env.CLIENT_ID }} --instance-url ${{ env.INSTANCE_URL }}  --alias develop --set-default  --json 
+          #echo "${{ secrets.SERVERKEY}" > ./key/server.key
+          sf org login jwt --username  ${{ env.SF_USERNAME }} --jwt-key-file "$SERVER_KEY_PATH" --client-id ${{ env.CLIENT_ID }} --instance-url ${{ env.INSTANCE_URL }}  --alias develop --set-default  --json 
         
       - name: Verify Authentication
         run: |
