@@ -18,12 +18,12 @@ jobs:
     steps:
       # Checkout the Source code from the latest commit
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
            fetch-depth: 0
            
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '22.11.0'
           
@@ -80,7 +80,7 @@ jobs:
         run: |
           sf scanner run -f html -t "./force-app" -e "eslint,retire-js,pmd,cpd" -c "Design,Best Practices,Code Style,Performance,Security" --outfile reports/scan-reports.html 
      
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
             name: cli-scan-report
             path: reports/scan-reports.html
