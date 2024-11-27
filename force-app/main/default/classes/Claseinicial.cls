@@ -4,9 +4,7 @@ public with sharing class Claseinicial {
        System.debug('There are ' + accountCount + 'ccounts in the system.');
      
 
-
-
     }
-    
+
 
    }
