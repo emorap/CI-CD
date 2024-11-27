@@ -11,7 +11,7 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     env:
-      Secret: ${{ secrets.SERVERKEY}}
+      Secreto: ${{ secrets.SERVERKEY}}
       CLIENT_ID: ${{ secrets.CLIENT_ID }}
       INSTANCE_URL:  ${{ vars.URL }}
       SF_USERNAME:  ${{ vars.SF_USERNAME }}    
@@ -46,17 +46,10 @@ jobs:
 
       - name: create folder
         run: mkdir -p ./key
-
-      - name: cargar directorio
-        run:  echo "${Secret}" > ./key/server.key
-
-      - name: Set environment variable for server key file
-        run: echo "SERVER_KEY_PATH=$(pwd)/key/server.key" >> $GITHUB_ENV
-             cat ./key/server.key  # Imprime el contenido del archivo
       
       - name: Authenticate with Salesforce CLI using JWT flow
         run:
-          echo "${Secret}" > ./key/server.key           
+          echo "$Secreto" > ./key/server.key           
           sf org login jwt --username  ${{ env.SF_USERNAME }} --jwt-key-file /home/runner/work/CI-CD/CI-CD/key/server.key  --client-id ${{ env.CLIENT_ID }} --instance-url ${{ env.INSTANCE_URL }}  --alias develop --set-default  --json 
         
       - name: Verify Authentication
