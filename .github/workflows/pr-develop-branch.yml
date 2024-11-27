@@ -14,9 +14,7 @@ jobs:
       Secret: ${{ secrets.SERVERKEY}}
       CLIENT_ID: ${{ secrets.CLIENT_ID }}
       INSTANCE_URL:  ${{ vars.URL }}
-      SF_USERNAME:  ${{ vars.SF_USERNAME }}
-      TESTS_TO_RUN: ALL
-    
+      SF_USERNAME:  ${{ vars.SF_USERNAME }}    
     steps:
       # Checkout the Source code from the latest commit
       - name: Checkout code
