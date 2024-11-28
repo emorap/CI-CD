@@ -28,6 +28,7 @@ jobs:
   
   InicioDespliegue:
     runs-on: ubuntu-latest
+    needs: [Explore-GitHub-Actions]
     env:
       Secreto: ${{ secrets.SERVERKEY}}
       CLIENT_ID: ${{ secrets.CLIENT_ID }}
@@ -66,26 +67,22 @@ jobs:
         run: 
           mkdir -p ./key
 
-      #- name: create folder
-      # run: 
-      #    echo "${Secreto}" > ./key/server.key
-      #    cat ./key/server.key  # Imprime el contenido del archivo
-      
-     # - name: Set environment variable for server key file
-      #  run: echo "SERVER_KEY_PATH=$(pwd)/key/server.key" >> $GITHUB_ENV
-
       - name: Authenticate with Salesforce CLI using JWT flow
         run: |
            echo "${Secreto}" > ./key/server.key
            sf org login jwt --username  ${{ env.SF_USERNAME }} --jwt-key-file "./key/server.key" --client-id ${{ env.CLIENT_ID }} --instance-url ${{ env.INSTANCE_URL }}  --alias develop --set-default  --json 
-        
+      
       - name: Verify Authentication
         run: |
           sf org list
-      
-      - name: PreDeploy sf
+          
+      - name:  Validación de Codigo 
+        run:
+         sf project deploy validate --manifest "./delta_source/package/package.xml" --test-level RunLocalTests --target-org develop
+ 
+      - name: Deploy Salesforce
         run: 
-          sf project deploy start --manifest "./delta_source/package/package.xml"  --target-org develop --test-level RunLocalTests --dry-run --ignore-conflicts 
+          sf project deploy start --manifest "./delta_source/package/package.xml"  --target-org develop --ignore-conflicts 
 
       - name: Install the SFDX CLI Scanner
         run: |
