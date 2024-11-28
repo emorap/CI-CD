@@ -54,13 +54,16 @@ jobs:
       - name: Install sfdx-git-delta
         run: echo 'y' | sfdx plugins:install sfdx-git-delta
 
-      #- name: Create delta directory
-      #  run: mkdir ./delta_source
+      - name: Create delta directory
+        run: mkdir ./manifest
 
       - name: Check changes
       #  run: sfdx sgd:source:delta --to HEAD --from HEAD~1 -o ./delta_source -d -s force-app/
-        run: sfdx sgd:source:delta --to HEAD --from HEAD~1 -o "/home/runner/work/CI-CD/CI-CD/manifest" -d -s force-app/
-
+        run: sfdx sgd:source:delta --to HEAD --from HEAD~1 -o ".manifest" -d -s force-app/
+        
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
       
       - name: Show package.xml
         #run: cat ./delta_source/package/package.xml
