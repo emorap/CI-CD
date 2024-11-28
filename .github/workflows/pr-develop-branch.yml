@@ -59,15 +59,15 @@ jobs:
 
       - name: Check changes
       #  run: sfdx sgd:source:delta --to HEAD --from HEAD~1 -o ./delta_source -d -s force-app/
-        run: sfdx sgd:source:delta --to HEAD --from HEAD~1 -o .manifest -d -s force-app/
+        run: sfdx sgd:source:delta --to HEAD --from HEAD~1 -o ".manifest" -d -s force-app/
 
       
       - name: Show package.xml
         #run: cat ./delta_source/package/package.xml
-        run: cat .manifest/package/package.xml
+        run: cat ".manifest/package/package.xml"
 #este se borra
       - name: Show destructiveChanges.xml
-        run: cat .manifest/package/destructiveChanges.xml
+        run: cat ".manifest/package/destructiveChanges.xml"
 #Fin de se borra
 
       - name: create folder
@@ -85,11 +85,11 @@ jobs:
           
       - name:  Validación de Codigo 
         run:
-         sf project deploy validate --manifest ".manifest/package" --test-level RunLocalTests --target-org develop
+         sf project deploy validate --manifest ".manifest/package/package.xml" --test-level RunLocalTests --target-org develop
  
       - name: Deploy Salesforce
         run: 
-          sf project deploy start --manifest "./delta_source/package/package.xml"  --target-org develop --ignore-conflicts 
+          sf project deploy start --manifest ".manifest/package"  --target-org develop --ignore-conflicts 
 
       - name: Install the SFDX CLI Scanner
         run: |
