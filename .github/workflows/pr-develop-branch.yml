@@ -54,8 +54,8 @@ jobs:
       - name: Install sfdx-git-delta
         run: echo 'y' | sfdx plugins:install sfdx-git-delta
 
-       name: Create delta directory
-       run: mkdir ./delta_source
+      - name: Create delta directory
+        run: mkdir ./manifest
 
       - name: Check changes
       #  run: sfdx sgd:source:delta --to HEAD --from HEAD~1 -o ./delta_source -d -s force-app/
