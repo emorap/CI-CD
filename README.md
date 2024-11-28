@@ -23,6 +23,8 @@ https://medium.com/@danielbelini/how-to-install-salesforce-cli-on-github-actions
 https://www.apexhours.com/ci-cd-pipeline-using-gitlab-for-salesforce/
 https://github.com/salto-io/salesforce-ci-cd-org-dev/blob/master/.github/workflows/pr-develop-branch.yml
 
+https://github.com/amitastreait/github-actions/?tab=readme-ov-file#integrate-the-static-code-analysis-tool
+
 
 sfdx force:auth:jwt:grant --clientid 3MVG9AR068fT4uszYXeLVVMxnyfzZe.8EheVp1RuN3rbtENZXCmcF_x8xeikX640ak.UivTCzD_f0ddCtZNZA --jwtkeyfile /Users/edgar.mora/Downloads/server.key --username edgar.mora@clarosfi.com.co.devops --instanceurl https://clarosfi--devops.sandbox.my.salesforce.com –setdefaultdevhubusername --json
 
@@ -41,3 +43,27 @@ sf org login jwt --username  edgar.mora@clarosfi.com.co.devops --jwt-key-file /U
             sf project deploy validate --source-dir "./delta_source/force-app" --wait 1000 --verbose --test-level RunSpecifiedTests --tests ${{env.APEX_TESTS}} --target-org jwt-login
 
             sf project deploy start --manifest packageChanges.xml --target-org  $(username-qa) --test-level RunLocalTests --dry-run --ignore-conflicts
+
+
+steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+      - run: echo "🍏 This job's status is ${{ job.status }}."
+
+
+
+## Prueba de JWT-Based Flow
+sf org login jwt --username  edgar@clarosfi.com.co.devops --jwt-key-file /Users/edgar.mora/Downloads/server.key --client-id {ADD_YOUR_CLIENT_ID} --instance-url https://test.salesforce.com --json
+
+–clientid  :- provide Consumer Key
+–jwtkeyfile :- Absolute path to the location where you generated your OpenSSL server.key file
+–instanceurl :-provide instanceurl if you are using sandbox.
