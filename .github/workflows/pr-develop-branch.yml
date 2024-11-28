@@ -49,29 +49,28 @@ jobs:
       - name: Install the SF CLI
         run: |
           npm install @salesforce/cli --global
-          sf --help 
 
       - name: Install sfdx-git-delta
         run: echo 'y' | sfdx plugins:install sfdx-git-delta
 
       - name: Create delta directory
-        run: mkdir ./manifest
+        run: mkdir ./manifestdelta
 
       - name: Check changes
       #  run: sfdx sgd:source:delta --to HEAD --from HEAD~1 -o ./delta_source -d -s force-app/
-        run: sfdx sgd:source:delta --to HEAD --from HEAD~1 -o ".manifest" -d -s force-app/
-        
-      - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
+        run: sfdx sgd:source:delta --to HEAD --from HEAD~1 -o ".manifestdelta" -d -s force-app/
       
       - name: Show package.xml
         #run: cat ./delta_source/package/package.xml
-        run: cat ".manifest/package/package.xml"
+        run: cat .manifestdelta/package/package.xml
 #este se borra
       - name: Show destructiveChanges.xml
-        run: cat ".manifest/package/destructiveChanges.xml"
+        run: cat .manifest/package/destructiveChanges.xml
 #Fin de se borra
+
+      - name: List files in the repository
+        run: |
+         ls ${{ github.workspace }}
 
       - name: create folder
         run: 
@@ -88,12 +87,16 @@ jobs:
           
       - name:  Validación de Codigo 
         run:
-         sf project deploy validate --manifest ".manifest/package/package.xml" --test-level RunLocalTests --target-org develop
+         sf project deploy validate --manifest ".manifestdelta/package/package.xml" --test-level RunLocalTests --target-org develop
  
       - name: Deploy Salesforce
         run: 
-          sf project deploy start --manifest ".manifest/package"  --target-org develop --ignore-conflicts 
+          sf project deploy start --manifest ".manifest/package/package.xml"  --target-org develop --ignore-conflicts 
 
+      - name: Deploy destructiveChanges 
+        run: 
+          sf project deploy start --manifest ".manifest/package/destructiveChanges.xml"  --target-org develop --ignore-conflicts 
+  
       - name: Install the SFDX CLI Scanner
         run: |
           echo 'y' | sf plugins install @salesforce/sfdx-scanner
