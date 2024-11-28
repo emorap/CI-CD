@@ -38,9 +38,19 @@ sf org login jwt --username  edgar.mora@CRM.com.co.devops --jwt-key-file /Users/
 
 ## Crear Connected App 
   https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_auth_connected_app.htm
-  
+
 ## Adjunto Imagenes 
 ![Connected App](StepsConnectedApps/P1.png)
 ![Connected App](StepsConnectedApps/P2.png)
 ![Edit Policies](<StepsConnectedApps/Edit Policies.png>)
 ![On Manage Connected App](<StepsConnectedApps/On Manage Connected App.png>)
+
+   Integer accountCount = [SELECT COUNT() FROM Account];
+       System.debug('There are ' + accountCount + 'ccounts in the system.');
+
+
+devops-aaaamzh6zl62fua33uc66ai2bm@salesforce.org.slack.com
+
+https://github.com/slackapi/slack-github-action?tab=readme-ov-file
+
+https://slack.com/intl/es-la/help/articles/360041352714-Crear-un-flujo-de-trabajo--Crear-un-flujo-de-trabajo-que-se-inicie-fuera-de-Slack
