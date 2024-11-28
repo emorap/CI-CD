@@ -32,8 +32,8 @@ jobs:
     env:
       Secreto: ${{ secrets.SERVERKEY}}
       CLIENT_ID: ${{ secrets.CLIENT_ID }}
-      INSTANCE_URL:  ${{ secrets.URL }}
-      SF_USERNAME:  ${{ secrets.SF_USERNAME }}    
+      INSTANCE_URL:  ${{ vars.URL }}
+      SF_USERNAME:  ${{ vars.SF_USERNAME }}    
     steps:
       # Checkout the Source code from the latest commit
       - name: Checkout code
@@ -99,16 +99,3 @@ jobs:
         with:
             name: cli-scan-report
             path: reports/scan-reports.html
-
-  MensajeSlack:
-    runs-on: ubuntu-latest
-    needs: [Explore-GitHub-Actions]
-    steps:
-      - name: Send custom event details to a Slack workflow
-        uses: slackapi/slack-github-action@v2.0.0
-        with:
-          webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
-          webhook-type: webhook-trigger
-          payload: |
-            status: "${{ job.status }}"
-            option: "false"
