@@ -26,7 +26,6 @@ jobs:
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
   
-  build:
   InicioDespliegue:
     runs-on: ubuntu-latest
     env:
