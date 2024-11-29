@@ -58,6 +58,11 @@ public with sharing class Claseinicial {
 
    }
 
+    <types>
+        <members>Claseinicial</members>
+        <name>ApexClass</name>
+    </types>
+
 ## Cuando termine un despliegue enviar un Mensaje a Slack
 
 https://github.com/slackapi/slack-github-action?tab=readme-ov-file

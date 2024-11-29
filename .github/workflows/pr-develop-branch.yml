@@ -131,7 +131,7 @@ jobs:
     steps:
       - name: create folder
         run: 
-          mkdir -p ./diferencias/archivosmodificados.txt
+          mkdir -p ./diferencias
 
       - name: Send custom event details to a Slack workflow
         run: 
