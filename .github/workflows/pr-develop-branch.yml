@@ -58,7 +58,7 @@ jobs:
 
       - name: Check changes
       #  run: sfdx sgd:source:delta --to HEAD --from HEAD~1 -o ./delta_source -d -s force-app/
-        run: sfdx sgd:source:delta --to HEAD --from HEAD~1 -o ".manifestdelta" -d -s force-app/
+        run: sfdx sgd:source:delta --to HEAD --from HEAD~1 -o .manifestdelta -d -s force-app/
       
       - name: Show package.xml
         #run: cat ./delta_source/package/package.xml
