@@ -84,18 +84,27 @@ jobs:
         run: |
           sf org list
           
-      - name:  Validación de Codigo 
-        run:
-         sf project deploy validate --manifest "./manifestdelta/package/package.xml" --target-org develop
+      #- name:  Validación de Codigo 
+       # run:
+        # sf project deploy validate --manifest "./manifestdelta/package/package.xml" --target-org develop
  
       - name: Deploy Salesforce
         run: 
-          sf project deploy start --manifest "./manifestdelta/package/package.xml" --post-destructive-changes "./manifest/package/destructiveChangesPost.xml" --target-org develop --ignore-conflicts 
+          sf project deploy start --manifest "./manifestdelta/package/package.xml"  --target-org develop --ignore-conflicts 
 
-      #- name: Deploy destructiveChanges 
+      - name: Deploy destructiveChanges 
        # run: 
-       #   sf project deploy start --post-destructive-changes "./manifest/package/destructiveChanges.xml"  --target-org develop --ignore-conflicts 
+        #  sf project deploy start --post-destructive-changes "./manifest/package/destructiveChanges.xml"  --target-org develop --ignore-conflicts 
   
+        run: |
+           if [ -s "./manifest/package/destructiveChanges.xml" ] && grep -q "<types>" "./manifest/package/destructiveChanges.xml"; then
+           echo "Destructive changes found, proceeding with deploy."
+           # Ejecuta el deploy si hay componentes en el archivo
+           sf project deploy start --post-destructive-changes "./manifest/package/destructiveChanges.xml" --target-org develop --ignore-conflicts
+           else
+           echo "No destructive changes found, skipping deploy."
+           fi
+    
       - name: Install the SFDX CLI Scanner
         run: |
           echo 'y' | sf plugins install @salesforce/sfdx-scanner
