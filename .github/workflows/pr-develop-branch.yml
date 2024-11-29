@@ -86,7 +86,7 @@ jobs:
           
       - name:  Validación de Codigo 
         run:
-         sf project deploy validate --manifest "./manifestdelta/package/package.xml" --test-level NoTestRun --target-org develop
+         sf project deploy validate --manifest "./manifestdelta/package/package.xml" --target-org develop
  
       - name: Deploy Salesforce
         run: 
