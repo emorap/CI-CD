@@ -93,17 +93,8 @@ jobs:
           sf project deploy start --manifest "./manifestdelta/package/package.xml"  --target-org develop --ignore-conflicts 
 
       - name: Deploy destructiveChanges 
-       # run: 
-        #  sf project deploy start --post-destructive-changes "./manifest/package/destructiveChanges.xml"  --target-org develop --ignore-conflicts 
-  
-        run: |
-           if [ -s "./manifest/package/destructiveChangesPost.xml" ] && grep -q "<types>" "./manifest/package/destructiveChanges.xml"; then
-           echo "Destructive changes found, proceeding with deploy."
-           # Ejecuta el deploy si hay componentes en el archivo
-           sf project deploy start --post-destructive-changes "./manifest/package/destructiveChangesPost.xml" --target-org develop --ignore-conflicts
-           else
-           echo "No destructive changes found, skipping deploy."
-           fi
+        run: 
+          sf project deploy start --post-destructive-changes "./manifest/package/destructiveChangesPost.xml"  --target-org develop --ignore-conflicts 
     
       - name: Install the SFDX CLI Scanner
         run: |
@@ -133,3 +124,17 @@ jobs:
           payload: |
             status: "${{ job.status }}"
             option: "false"
+  
+  DeltaComponent:
+    runs-on: ubuntu-latest
+    needs: [Explore-GitHub-Actions]
+    steps:
+      - name: create folder
+        run: 
+          mkdir -p ./diferencias/archivosmodificados.txt
+
+      - name: Send custom event details to a Slack workflow
+        run: 
+          git diff --name-status HEAD~1> ./diferencias/archivosmodificados.txt
+      - name: Show componentes
+        run: cat ./diferencias/archivosmodificados.txt
