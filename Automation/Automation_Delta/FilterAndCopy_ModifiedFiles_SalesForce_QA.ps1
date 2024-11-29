@@ -14,21 +14,7 @@ Parametros:
 @sourcePath = ruta origen
 @targetPath = ruta destino
 #>
-Param(
-    [Parameter(Mandatory=$false)] 
-    [string] $sourcePath= "./diferencias/"
-)
 
-# FilterAndCopy_Modifie.ps1
-# Crear el directorio 'diferencias' en el repositorio actual
-
-
-<# Funcion que recorre linea a linea el contenido que se encuentra dentro del parametro $linesFile
-   Cada line puede representra una ruta de directorio o un archivo. 
-   @param $linesFile Contenido de las diferencias que se encuentran dentro de ArchivosCambiados.txt
-   @param $originPath ruta origen
-   @param $targetPath ruta destino
-#>
 $diffFilePath = $env:DIFF_FILE_PATH
 $linesFile = = Get-Content -Path $diffFilePath
 # Definir la función para filtrar y copiar archivos

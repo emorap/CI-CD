@@ -151,7 +151,7 @@ jobs:
       - name: Run PowerShell script
         env:
              DIFF_FILE_PATH: ${{ github.workspace }}/diferencias/archivosmodificados.txt
-        run: pwsh 
+        run: pwsh -File
          Automation/Automation_Delta/FilterAndCopy_ModifiedFiles_SalesForce_QA.ps1
 
      
