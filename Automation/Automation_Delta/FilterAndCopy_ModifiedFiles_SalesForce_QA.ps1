@@ -29,7 +29,7 @@ Param(
    @param $originPath ruta origen
    @param $targetPath ruta destino
 #>
-$linesFile = Get-Content -Path "$sourcePath/archivosmodificados.txt"
+$linesFile = = Get-Content -Path $env:DIFF_FILE_PATH
 # Definir la función para filtrar y copiar archivos
 
 function FilterAndCopyFiles (){
