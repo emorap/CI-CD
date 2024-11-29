@@ -141,5 +141,13 @@ jobs:
       - name: Send custom event details to a Slack workflow
         run: 
           git diff --name-status HEAD~1> "./diferencias/archivosmodificados.txt"
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+
       - name: Show componentes
         run: cat ./diferencias/archivosmodificados.txt
+
+      - name: Run PowerShell script
+        run: Automation/Automation_Delta/FilterAndCopy_ModifiedFiles_SalesForce_QA.ps1
+        shell: pwsh
