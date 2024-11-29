@@ -100,7 +100,7 @@ jobs:
            if [ -s "./manifest/package/destructiveChangesPost.xml" ] && grep -q "<types>" "./manifest/package/destructiveChanges.xml"; then
            echo "Destructive changes found, proceeding with deploy."
            # Ejecuta el deploy si hay componentes en el archivo
-           sf project deploy start --post-destructive-changes ".manifest/package/destructiveChangesPost.xml" --target-org develop --ignore-conflicts
+           sf project deploy start --post-destructive-changes "./manifest/package/destructiveChangesPost.xml" --target-org develop --ignore-conflicts
            else
            echo "No destructive changes found, skipping deploy."
            fi
