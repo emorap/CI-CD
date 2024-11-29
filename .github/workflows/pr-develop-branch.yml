@@ -1,5 +1,4 @@
 name: Ejecutar automatización de PR en ambiente develop
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 # Definition when the workflow should run
 on:
     # The workflow will run whenever an event happens on a pull request
@@ -58,14 +57,14 @@ jobs:
 
       - name: Check changes
       #  run: sfdx sgd:source:delta --to HEAD --from HEAD~1 -o ./delta_source -d -s force-app/
-        run: sfdx sgd:source:delta --to HEAD --from HEAD~1 -o .manifestdelta -d -s force-app/
+        run: sfdx sgd:source:delta --to HEAD --from HEAD~1 -o ./manifestdelta -d -s force-app/
       
       - name: Show package.xml
         #run: cat ./delta_source/package/package.xml
-        run: cat .manifestdelta/package/package.xml
+        run: cat ./manifestdelta/package/package.xml
 #este se borra
       - name: Show destructiveChanges.xml
-        run: cat .manifest/package/destructiveChanges.xml
+        run: cat ./manifest/package/destructiveChanges.xml
 #Fin de se borra
 
       - name: List files in the repository
@@ -87,15 +86,15 @@ jobs:
           
       - name:  Validación de Codigo 
         run:
-         sf project deploy validate --manifest ".manifestdelta/package/package.xml" --test-level RunLocalTests --target-org develop
+         sf project deploy validate --manifest "./manifestdelta/package/package.xml" --test-level RunLocalTests --target-org develop
  
       - name: Deploy Salesforce
         run: 
-          sf project deploy start --manifest ".manifest/package/package.xml"  --target-org develop --ignore-conflicts 
+          sf project deploy start --manifest "./manifest/package/package.xml"  --target-org develop --ignore-conflicts 
 
       - name: Deploy destructiveChanges 
         run: 
-          sf project deploy start --manifest ".manifest/package/destructiveChanges.xml"  --target-org develop --ignore-conflicts 
+          sf project deploy start --manifest "./manifest/package/destructiveChanges.xml"  --target-org develop --ignore-conflicts 
   
       - name: Install the SFDX CLI Scanner
         run: |
