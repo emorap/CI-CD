@@ -64,7 +64,7 @@ jobs:
         run: cat ./manifestdelta/package/package.xml
 #este se borra
       - name: Show destructiveChanges.xml
-        run: cat ./manifest/package/destructiveChanges.xml
+        run: cat ./manifest/package/destructiveChangesPost.xml
 #Fin de se borra
 
       - name: List files in the repository
