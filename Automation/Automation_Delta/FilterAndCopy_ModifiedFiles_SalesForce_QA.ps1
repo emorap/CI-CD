@@ -29,7 +29,8 @@ Param(
    @param $originPath ruta origen
    @param $targetPath ruta destino
 #>
-$linesFile = = Get-Content -Path $env:DIFF_FILE_PATH
+$diffFilePath = $env:DIFF_FILE_PATH
+$linesFile = = Get-Content -Path $diffFilePath
 # Definir la función para filtrar y copiar archivos
 
 function FilterAndCopyFiles (){
