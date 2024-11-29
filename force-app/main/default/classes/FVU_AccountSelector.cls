@@ -17,6 +17,5 @@ public with sharing class FVU_AccountSelector {
 
         return (accountList.isEmpty()) ? null : accountList[0];
 
-        
     }
 }
