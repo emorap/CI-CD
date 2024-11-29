@@ -90,11 +90,11 @@ jobs:
  
       - name: Deploy Salesforce
         run: 
-          sf project deploy start --manifest "./manifestdelta/package/package.xml"  --target-org develop --ignore-conflicts 
+          sf project deploy start --manifest "./manifestdelta/package/package.xml" --post-destructive-changes "./manifest/package/destructiveChangesPost.xml" --target-org develop --ignore-conflicts 
 
-      - name: Deploy destructiveChanges 
-        run: 
-          sf project deploy start --manifest "./manifest/package/destructiveChanges.xml"  --target-org develop --ignore-conflicts 
+      #- name: Deploy destructiveChanges 
+       # run: 
+       #   sf project deploy start --post-destructive-changes "./manifest/package/destructiveChanges.xml"  --target-org develop --ignore-conflicts 
   
       - name: Install the SFDX CLI Scanner
         run: |
