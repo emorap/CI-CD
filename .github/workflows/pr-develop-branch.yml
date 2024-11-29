@@ -90,7 +90,7 @@ jobs:
  
       - name: Deploy Salesforce
         run: 
-          sf project deploy start --manifest "./manifest/package/package.xml"  --target-org develop --ignore-conflicts 
+          sf project deploy start --manifest "./manifestdelta/package/package.xml"  --target-org develop --ignore-conflicts 
 
       - name: Deploy destructiveChanges 
         run: 
