@@ -1,3 +1,19 @@
+<#
+Descripcion: 
+    Script dedicado netamente para el funcionamiento de Salesforce.
+    Inicia con la lectura del archivo ArchivosCambiados.txt. El contenido del archivo debe tener almenos una l;inea con la siguiente estructura:
+      D dataPack/OrchestrationDependencyDefinition/Archivo1
+      M dataPack/OrchestrationDependencyDefinition/Archivo2
+      A dataPack/OrchestrationDependencyDefinition/Archivo3
+    Cada linea del archivo se compone de 2 grupos:
+    - Inicia con alguna de las siguientes letras [D,M,A], donde D=Delete; A=Add y M=Modified
+    - Ruta completa del archivo impactado 
+Copia desde una ruta origen (X) hacia una ruta destino (Y) el congunto de archivos que se encuentran indicados dentro del archivo
+ArchivosCambiados.txt
+Parametros:
+@sourcePath = ruta origen
+@targetPath = ruta destino
+#>
 
 $diffFilePath = $env:DIFF_FILE_PATH
 $linesFile = = Get-Content -Path $diffFilePath
