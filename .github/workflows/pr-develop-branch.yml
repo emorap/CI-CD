@@ -141,13 +141,18 @@ jobs:
       - name: Send custom event details to a Slack workflow
         run: 
           git diff --name-status HEAD~1> "./ArchivosCambiados/DiferenciasArchivosCambiados.xml "
+      
+      - name: Mostrar Diferencias
+          #run: cat ./delta_source/package/package.xml
+        run: cat ./ArchivosCambiados/DiferenciasArchivosCambiados.xml
+
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
 
       - name: Run PowerShell script    
-        #env:
-         #    DIFF_FILE_PATH: {{ github.workspace }}/diferencias/archivosmodificados.txt
+        env:
+            DIFF_FILE_PATH: ${{ github.workspace }}/ArchivosCambiados/DiferenciasArchivosCambiados.xml
 
         run: pwsh
          Automation/Automation_Delta/FilterAndCopy_ModifiedFiles_SalesForce_QA.ps1

@@ -23,7 +23,17 @@ Parametros:
 #>
 #$linesFile = Get-Content -Path "manifest/package/destructiveChangesPost.xml"
 
-$linesFile = Get-Content -Path "./ArchivosCambiados/DiferenciasArchivosCambiados.xml"
+$newFolderName = "NuevoDirectorio"
+New-Item -ItemType Directory -Path $newFolderName
+
+$differenceFilePath = Join-Path -Path $newFolderName -ChildPath "DiferenciasArchivosCambiados.xml"
+git diff --name-status HEAD~1> $differenceFilePath
+$gitDiffOutput = Get-Content -Path $differenceFilePath
+Write-Host "Diferencias en el espacio de trabajo actual:" -ForegroundColor Yellow
+Write-Output $gitDiffOutput
+
+#$linesFile = Get-Content -Path "./ArchivosCambiados/DiferenciasArchivosCambiados.xml"
+$linesFile = = Get-Content -Path $env:DIFF_FILE_PATH
 function FilterAndCopyFiles (){
     param (
         $linesFile, 
