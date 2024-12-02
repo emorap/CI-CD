@@ -136,71 +136,26 @@ jobs:
 
       - name: create folder
         run: 
-          mkdir -p ./diferencias
+          mkdir -p ./ArchivosCambiados
 
       - name: Send custom event details to a Slack workflow
         run: 
-          git diff --name-status HEAD~1> "./diferencias/archivosmodificados.txt"
+          git diff --name-status HEAD~1> "./ArchivosCambiados/DiferenciasArchivosCambiados.xml "
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
-      - name: Run PowerShell script
-        run: |
-          $sourcePath = "${{ github.workspace }}/"
-          $diffFilePath = "${{ github.workspace }}/diferencias/archivosmodificados.txt"
-          $linesFile = Get-Content -Path $diffFilePath
-          function FilterAndCopyFiles {
-          param (
-          $linesFile,
-          [string] $originPath,
-          [string] $targetPath
-          )
-          Write-Host '**** Funcion FilterAndCopyFiles *******'
-          $filesCount = @{ result = 0 }
-          $finalSourcePath = ''
-          $finalTargetPath = ''
-          $path_datapack = @()
-          foreach ($line in $linesFile) {
-          if ($line -match '[D,M,A,R]\d{0,4}\tdataPack\/.*$' -or $line -match '[D,M,A,R]\d{0,4}\tforce-app\/.*$') {
-          if ($line -match '[R]\d{0,4}\tdataPack\/.*$' -or $line -match '[R]\d{0,4}\tforce-app\/.*$') {
-          $line_split = $line.split("`t")
-          $status_line = $line_split[0]
-          $path_file = $line_split[2]
-          } else {
-          $line_split = $line.split("`t")
-          $status_line = $line_split[0]
-          $path_file = $line_split[1]
-          }
-          $finalSourcePath = $originPath + $path_file
-          $finalTargetPath = $targetPath + $path_file
-          if ($path_file -match 'dataPack\/[^\/]+\/[^\/]+\/') {
-          Write-Host "`tEn dataPack:" -ForegroundColor Yellow
-          $componentFolder = $path_file -replace '^(dataPack\/[^\/]+\/[^\/]+)\/.*$', '$1'
-          $componentPath = $originPath + $componentFolder
-          $destinationComponentPath = $targetPath + $componentFolder
-          $destinationComponentPath = Split-Path $destinationComponentPath -Parent
-          if (-not ($path_datapack.Contains($componentFolder)) -and (Test-Path -Path $componentPath)) {
-          if (-not (Test-Path -Path $destinationComponentPath)) {
-          New-Item -ItemType Directory -Force -Path $destinationComponentPath
-          }
-          Copy-Item -Path $componentPath -Destination $destinationComponentPath -Recurse -Force
-          $path_datapack += $componentFolder
-          Write-Host "Copiada ruta: $componentFolder"
-          $filesCount.result++
-          }
-          } elseif ($path_file -match 'force-app\/[^\/]+\/[^\/]+\/classes+\/' -or $path_file -match 'force-app\/[^\/]+\/[^\/]+\/triggers+\/') {
-          if ($status_line -ne "D") {
-          $componentFolder = $path_file -replace '^(force-app\/[^\/]+\/[^\/]+\/classes\/)(.*$)', '$1'
-          $fileName = $path_file -replace '^(force-app\/[^\/]+\/[^\/]+\/classes\/)(.*$)', '$2'
-          $fileName = $fileName.split(".")[0]
-          Write-Host "`tforce-app (classes - triggers)" -ForegroundColor Yellow
-          $componentPath = $originPath + $componentFolder + $fileName + ".*"
-          $destinationComponentPath = $targetPath + $componentFolder
-          if (-not (Test-Path -Path $destinationComponentPath)) {
-          New-Item -ItemType Directory -Force -Path $destinationComponentPath
-          }
-          Copy-Item -Path $componentPath -Destination $destinationComponentPath -Recurse
-          $filesCount.result
-      
+
+      - name: Run PowerShell script    
+        #env:
+         #    DIFF_FILE_PATH: {{ github.workspace }}/diferencias/archivosmodificados.txt
+
+        run: pwsh
+         Automation/Automation_Delta/FilterAndCopy_ModifiedFiles_SalesForce_QA.ps1
+      - name: generate manifest
+        run: 
+          sf project generate manifest --source-dir Archivos_Modificados  --type post --output-dir manifest/package
+
+      - name: Show package.xml
+          #run: cat ./delta_source/package/package.xml
+        run: cat ./manifest/package/destructiveChangesPost.xml
      
-        
