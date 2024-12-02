@@ -1,8 +1,29 @@
+<#
+Descripcion: 
+    Script dedicado netamente para el funcionamiento de Salesforce.
+    Inicia con la lectura del archivo ArchivosCambiados.txt. El contenido del archivo debe tener almenos una l;inea con la siguiente estructura:
+      D dataPack/OrchestrationDependencyDefinition/Archivo1
+      M dataPack/OrchestrationDependencyDefinition/Archivo2
+      A dataPack/OrchestrationDependencyDefinition/Archivo3
+    Cada linea del archivo se compone de 2 grupos:
+    - Inicia con alguna de las siguientes letras [D,M,A], donde D=Delete; A=Add y M=Modified
+    - Ruta completa del archivo impactado 
+Copia desde una ruta origen (X) hacia una ruta destino (Y) el congunto de archivos que se encuentran indicados dentro del archivo
+ArchivosCambiados.txt
+Parametros:
+@sourcePath = ruta origen
+@targetPath = ruta destino
+#>
 
-$diffFilePath = $env:DIFF_FILE_PATH
-$linesFile = = Get-Content -Path $diffFilePath
-# Definir la función para filtrar y copiar archivos
+<# Funcion que recorre linea a linea el contenido que se encuentra dentro del parametro $linesFile
+   Cada line puede representra una ruta de directorio o un archivo. 
+   @param $linesFile Contenido de las diferencias que se encuentran dentro de ArchivosCambiados.txt
+   @param $originPath ruta origen
+   @param $targetPath ruta destino
+#>
+#$linesFile = Get-Content -Path "manifest/package/destructiveChangesPost.xml"
 
+$linesFile = Get-Content -Path "./ArchivosCambiados/DiferenciasArchivosCambiados.xml"
 function FilterAndCopyFiles (){
     param (
         $linesFile, 
@@ -127,7 +148,7 @@ if(Test-Path -Path $targetPath){
 }else{
     New-Item -ItemType Directory -Force -Path $targetPath
 }
-$sourcePathChangedFiles = $sourcePath + 'ArchivosCambiados.txt'
+$sourcePathChangedFiles = $sourcePath + './ArchivosCambiados/DiferenciasArchivosCambiados.xml'
 $contentModifiedFiles = Get-Content -Path $sourcePathChangedFiles
 PrintModifiedFiles -contentFile $contentModifiedFiles
 if(-not ($null -eq $contentModifiedFiles)){
